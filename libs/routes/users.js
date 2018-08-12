@@ -16,7 +16,8 @@ router.get('/info', passport.authenticate('bearer', { session: false }),
         res.json({
             user_id: req.user.userId,
             name: req.user.username,
-            scope: req.authInfo.scope
+            scope: req.authInfo.scope,
+            roles:['admin']
         });
     }
 );

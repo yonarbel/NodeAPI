@@ -3,10 +3,13 @@ import request from '@/utils/request'
 export function loginByUsername(username, password) {
   const data = {
     username,
-    password
+    password,
+    grant_type: 'password',
+    client_id: 'android',
+    client_secret: 'SomeRandomCharsAndNumbers'
   }
   return request({
-    url: '/login/login',
+    url: '/oauth/token',
     method: 'post',
     data
   })
@@ -21,9 +24,8 @@ export function logout() {
 
 export function getUserInfo(token) {
   return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+    url: '/users/info',
+    method: 'get'
   })
 }
 
