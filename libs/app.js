@@ -4,12 +4,13 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 
 var libs = process.cwd() + '/libs/';
+
 require(libs + 'auth/auth');
 
 var config = require('./config');
 var log = require('./log')(module);
 var oauth2 = require('./auth/oauth2');
-
+var static_folder = process.cwd() + '/ui/dist/static';
 var api = require('./routes/api');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
@@ -19,7 +20,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
-
+app.use('/static', express.static(static_folder))
 app.use('/', api);
 app.use('/api', api);
 app.use('/api/users', users);
@@ -46,5 +47,8 @@ app.use(function (err, req, res, next) {
     });
     return;
 });
+console.log("STATIC FOLDER",static_folder)
+
+//app.use(express.static(static_folder))
 
 module.exports = app;
